@@ -1,8 +1,0 @@
-{
-	"presets": ["next/babel"],
-	"plugins": [
-		"require-context-hook",
-		["styled-components", { "ssr": true }],
-		"inline-react-svg"
-	]
-}

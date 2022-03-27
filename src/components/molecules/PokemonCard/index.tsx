@@ -15,8 +15,7 @@ export const Wrapper = styled.div`
 	flex-direction: column;
 	justify-items: center;
 	align-items: center;
-	height: 80px;
-	width: 80px;
+	height: 140px;
 	> * {
 		&:first-child {
 			position: absolute;
@@ -24,7 +23,10 @@ export const Wrapper = styled.div`
 		}
 	}
 `
-export const ContentImage = styled.div``
+export const ContentImage = styled.div`
+	height: 100px;
+	margin: 20px 0;
+`
 
 interface PokemonCardType {
 	pokemon: PokemonType
@@ -34,12 +36,7 @@ const PokemonCard = ({ pokemon }: PokemonCardType) => (
 	<Wrapper>
 		<CircleNumber id={pokemon.id} />
 		<ContentImage>
-			<PokemonImage
-				src={pokemon.url}
-				layout="fixed"
-				width={100}
-				height={100}
-			/>
+			<PokemonImage src={pokemon.url} layout="fill" />
 		</ContentImage>
 		<Heading
 			title={pokemon.name}
