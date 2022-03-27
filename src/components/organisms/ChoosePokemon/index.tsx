@@ -8,6 +8,8 @@ import PokemonCard from '@molecules/PokemonCard'
 
 import Theme from '@themes/default'
 
+import { usePokemonContext } from '@contexts/pokemonProvider'
+
 interface ChoosePokemonType extends HTMLAttributes<HTMLDivElement> {
 	children?: React.ReactNode
 }
@@ -26,6 +28,7 @@ export const Content = styled.div<ChoosePokemonType>`
 
 const ChoosePokemon = () => {
 	const { pokemons, loading } = usePokemon()
+	const { setPokemonSelected } = usePokemonContext()
 
 	if (loading) {
 		return <p>carregando</p>
@@ -42,7 +45,14 @@ const ChoosePokemon = () => {
 			<Content>
 				{pokemons.length > 0 &&
 					pokemons.map(pokemon => (
-						<PokemonCard key={pokemon.id} pokemon={pokemon} />
+						<div
+							key={pokemon.id}
+							onClick={() =>
+								setPokemonSelected(prev => [...prev, pokemon])
+							}
+						>
+							<PokemonCard pokemon={pokemon} />
+						</div>
 					))}
 			</Content>
 		</Wrapper>

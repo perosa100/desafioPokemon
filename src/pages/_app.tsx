@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components'
 import Theme from '@themes/default'
 import { GlobalStyle } from '@themes/globals'
 
-import PokemonProvider from '@contexts/pokemonProvider'
+import { PokemonProvider } from '@contexts/pokemonProvider'
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (

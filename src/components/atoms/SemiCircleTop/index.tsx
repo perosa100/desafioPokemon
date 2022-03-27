@@ -12,7 +12,11 @@ export const CircleTop = styled.div<SemiCircleTopType>`
 	border-top-left-radius: 110px;
 	border-top-right-radius: 110px;
 	border: 30px solid
-		${props => (props.borderTop ? props.borderTop : props.theme.color.white)};
+		${props =>
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+			props.borderTop
+				? props.theme.pokeColor.borderTop
+				: props.theme.color.white};
 	border-bottom: 0;
 `
 

@@ -1,15 +1,14 @@
 import { HTMLAttributes } from 'react'
 
+import { PokemonType } from '@hooks/usePokemon'
 import styled from 'styled-components'
 
 import PokemonImage from '@atoms/PokemonImage'
 import SemiCircleBottom from '@atoms/SemiCircleBottom'
 import SemiCircleTop from '@atoms/SemiCircleTop'
 
-import { PokemonType } from '@organisms/PokedeckList'
-
 interface PokedeckType extends HTMLAttributes<HTMLDivElement> {
-	pokemon: PokemonType
+	pokemon?: PokemonType
 }
 
 export const Wrapper = styled.div`
@@ -21,8 +20,8 @@ export const Wrapper = styled.div`
 
 const Pokedeck = ({ pokemon }: PokedeckType) => (
 	<Wrapper>
-		<SemiCircleTop borderTop={pokemon.color} />
-		<PokemonImage src={pokemon.url} />
+		<SemiCircleTop borderTop={pokemon?.types[0]?.type.name} />
+		{pokemon?.url && <PokemonImage src={pokemon?.url} />}
 		<SemiCircleBottom />
 	</Wrapper>
 )

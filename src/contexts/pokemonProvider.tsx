@@ -1,15 +1,9 @@
+import { PokemonType } from '@hooks/usePokemon'
 import * as React from 'react'
+import { useContext } from 'react'
 
-export interface PokemonType {
-	id: string
-	url: string
-	name: string
-	color: string
-	types: Array<{
-		slot: string
-		type: string
-		name: string
-	}>
+export interface Type {
+	type: { name: string }
 }
 
 export interface TeamType {
@@ -18,23 +12,25 @@ export interface TeamType {
 	team: [PokemonType]
 }
 
-export interface PokemonContext {
-	pokemon: TeamType[] | null
-	setPokemon: React.Dispatch<React.SetStateAction<TeamType[] | null>>
-	pokemonSelected: Array<any> | null
-	setpokemonSelected: React.Dispatch<React.SetStateAction<Array<any> | null>>
+interface PokemonContextData {
+	pokemon: TeamType[]
+	setPokemon: React.Dispatch<React.SetStateAction<TeamType[]>>
+	pokemonSelected: PokemonType[]
+	setPokemonSelected: React.Dispatch<React.SetStateAction<PokemonType[]>>
 }
 
-export const PokemonContext = React.createContext<PokemonContext | null>(null)
-
-const PokemonProvider = ({ ...props }) => {
-	const [pokemon, setPokemon] = React.useState<PokemonContext['pokemon']>(null)
-	const [pokemonSelected, setpokemonSelected] =
-		React.useState<Array<any> | null>(null)
+const PokemonContext = React.createContext<PokemonContextData>(
+	{} as PokemonContextData
+)
+const PokemonProvider: React.FC = ({ ...props }) => {
+	const [pokemon, setPokemon] = React.useState<TeamType[]>([])
+	const [pokemonSelected, setPokemonSelected] = React.useState<PokemonType[]>(
+		[]
+	)
 
 	return (
 		<PokemonContext.Provider
-			value={{ pokemon, setPokemon, pokemonSelected, setpokemonSelected }}
+			value={{ pokemon, setPokemon, pokemonSelected, setPokemonSelected }}
 			{...props}
 		>
 			{props.children}
@@ -42,4 +38,14 @@ const PokemonProvider = ({ ...props }) => {
 	)
 }
 
-export default PokemonProvider
+function usePokemonContext(): PokemonContextData {
+	const context = useContext(PokemonContext)
+
+	if (!context) {
+		throw new Error('PokemonContextData must be used within an AuthProvider')
+	}
+
+	return context
+}
+
+export { usePokemonContext, PokemonProvider }

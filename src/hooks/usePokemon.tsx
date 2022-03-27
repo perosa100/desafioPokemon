@@ -60,10 +60,7 @@ export const usePokemon = () => {
 				setLoading(false)
 			})
 	}
-	console.log(
-		'🚀🚀 ~ file: usePokemon.tsx ~ line 34 ~ usePokemon ~ pokemons',
-		pokemons
-	)
+
 	React.useEffect(() => {
 		getUrlPokemons()
 	}, [])
