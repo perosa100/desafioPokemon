@@ -1,6 +1,6 @@
 import React, { HTMLAttributes } from 'react'
 
-import { usePokemon } from '@hooks/usePokemon'
+import { PokemonType, usePokemon } from '@hooks/usePokemon'
 import styled from 'styled-components'
 
 import HeadingIcon from '@molecules/HeadingIcon'
@@ -27,12 +27,33 @@ export const Content = styled.div<ChoosePokemonType>`
 `
 
 const ChoosePokemon = () => {
-	const { pokemons, loading } = usePokemon()
-	const { setPokemonSelected } = usePokemonContext()
+	const { pokemons, setPokemons, loading } = usePokemon()
 
+	const { pokemonSelected, setPokemonSelected } = usePokemonContext()
+	console.log(
+		'🚀🚀 ~ file: index.tsx ~ line 32 ~ ChoosePokemon ~ pokemonSelected',
+		pokemonSelected
+	)
+	console.log(
+		'🚀🚀 ~ file: index.tsx ~ line 31 ~ ChoosePokemon ~ pokemons',
+		pokemons
+	)
 	if (loading) {
 		return <p>carregando</p>
 	}
+
+	const handleAddPokemonList = (pokemon: PokemonType) => {
+		if (pokemonSelected.length >= 6) return
+
+		const data = {
+			...pokemon,
+			selected: !pokemon.selected
+		}
+
+		setPokemons(prev => [...prev, data])
+		setPokemonSelected(prev => [...prev, data])
+	}
+
 	return (
 		<Wrapper>
 			<HeadingIcon
@@ -47,9 +68,7 @@ const ChoosePokemon = () => {
 					pokemons.map(pokemon => (
 						<div
 							key={pokemon.id}
-							onClick={() =>
-								setPokemonSelected(prev => [...prev, pokemon])
-							}
+							onClick={() => handleAddPokemonList(pokemon)}
 						>
 							<PokemonCard pokemon={pokemon} />
 						</div>

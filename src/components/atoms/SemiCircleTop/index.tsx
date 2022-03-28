@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { HTMLAttributes } from 'react'
 
 import styled from 'styled-components'
 
 interface SemiCircleTopType extends HTMLAttributes<HTMLDivElement> {
-	borderTop?: string
+	borderTop?: any
 }
 
 export const CircleTop = styled.div<SemiCircleTopType>`
@@ -13,15 +16,14 @@ export const CircleTop = styled.div<SemiCircleTopType>`
 	border-top-right-radius: 110px;
 	border: 30px solid
 		${props =>
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 			props.borderTop
-				? props.theme.pokeColor.borderTop
+				? props.theme.pokeColor[props.borderTop]
 				: props.theme.color.white};
 	border-bottom: 0;
 `
 
-const SemiCircleTop = ({ borderTop }: SemiCircleTopType) => (
-	<CircleTop borderTop={borderTop} />
-)
+const SemiCircleTop = ({ borderTop }: SemiCircleTopType) => {
+	return <CircleTop borderTop={borderTop} />
+}
 
 export default SemiCircleTop

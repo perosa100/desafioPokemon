@@ -36,11 +36,6 @@ export const Options = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	gap: 10px;
-
-	&:nth-child(0) {
-		margin-right: 20px;
-		background-color: blue;
-	}
 `
 
 const PokedeckList = () => {

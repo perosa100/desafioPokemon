@@ -1,6 +1,7 @@
-import { PokemonType } from '@hooks/usePokemon'
 import * as React from 'react'
 import { useContext } from 'react'
+
+import { PokemonType } from '@hooks/usePokemon'
 
 export interface Type {
 	type: { name: string }

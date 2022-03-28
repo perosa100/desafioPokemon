@@ -9,6 +9,7 @@ export interface PokemonType {
 	url: string
 	name: string
 	types: Type[]
+	selected?: boolean
 }
 
 export interface Type {
@@ -39,7 +40,8 @@ export const usePokemon = () => {
 				id: response.data.id,
 				url: response.data.sprites.front_default,
 				name: response.data.name,
-				types: response.data.types
+				types: response.data.types,
+				selected: false
 			}
 			return setPokemons(prev => [...prev, data])
 		})
@@ -65,5 +67,5 @@ export const usePokemon = () => {
 		getUrlPokemons()
 	}, [])
 
-	return { pokemons, loading }
+	return { pokemons, loading, setPokemons }
 }

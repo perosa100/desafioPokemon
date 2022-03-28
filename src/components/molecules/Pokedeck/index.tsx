@@ -13,17 +13,19 @@ interface PokedeckType extends HTMLAttributes<HTMLDivElement> {
 
 export const Wrapper = styled.div`
 	position: relative;
-	/* > div {
-		margin-bottom: 8px;
-	} */
+	> div {
+		margin-top: 5px;
+	}
 `
 
-const Pokedeck = ({ pokemon }: PokedeckType) => (
-	<Wrapper>
-		<SemiCircleTop borderTop={pokemon?.types[0]?.type.name} />
-		{pokemon?.url && <PokemonImage src={pokemon?.url} />}
-		<SemiCircleBottom />
-	</Wrapper>
-)
+const Pokedeck = ({ pokemon }: PokedeckType) => {
+	return (
+		<Wrapper>
+			<SemiCircleTop borderTop={pokemon?.types[0].type.name} />
+			{pokemon?.url && <PokemonImage src={pokemon?.url} />}
+			<SemiCircleBottom />
+		</Wrapper>
+	)
+}
 
 export default Pokedeck

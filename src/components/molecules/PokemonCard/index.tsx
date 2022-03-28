@@ -22,6 +22,7 @@ export const Wrapper = styled.div`
 			left: 0;
 		}
 	}
+	cursor: pointer;
 `
 export const ContentImage = styled.div`
 	height: 100px;

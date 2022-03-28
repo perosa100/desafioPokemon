@@ -6,7 +6,7 @@ import Heading from '@atoms/Heading'
 export const Wrapper = styled.div`
 	height: 110px;
 	display: flex;
-	width: 440px;
+	width: 100%;
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-end;
