@@ -13,6 +13,7 @@ interface PokedeckType extends HTMLAttributes<HTMLDivElement> {
 
 export const Wrapper = styled.div`
 	position: relative;
+	cursor: pointer;
 	> div {
 		margin-top: 5px;
 	}

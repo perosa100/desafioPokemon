@@ -1,5 +1,6 @@
 import { HTMLAttributes } from 'react'
 
+import { PokemonType, usePokemon } from '@hooks/usePokemon'
 import styled from 'styled-components'
 
 import Delete from '@icons/Delete'
@@ -39,7 +40,23 @@ export const Options = styled.div`
 `
 
 const PokedeckList = () => {
-	const { pokemonSelected } = usePokemonContext()
+	const { pokemonSelected, setPokemonSelected } = usePokemonContext()
+	const { pokemons, setPokemons } = usePokemon()
+
+	const handleRemovePokemonList = (pokemon: PokemonType, index: number) => {
+		const newData = pokemonSelected.filter(p => p.id !== pokemon.id)
+
+		const data = {
+			...pokemon,
+			selected: !pokemon.selected
+		}
+
+		const pokeTemp = [...pokemons]
+		pokeTemp[index] = data
+
+		setPokemons(pokeTemp)
+		setPokemonSelected(newData)
+	}
 	return (
 		<Wrapper>
 			<HeadingIcon
@@ -49,8 +66,13 @@ const PokedeckList = () => {
 			/>
 
 			<Content>
-				{pokemonSelected.map(pokemon => (
-					<Pokedeck key={pokemon.id} pokemon={pokemon} />
+				{pokemonSelected.map((pokemon, index) => (
+					<div
+						key={pokemon.id}
+						onClick={() => handleRemovePokemonList(pokemon, index)}
+					>
+						<Pokedeck pokemon={pokemon} />
+					</div>
 				))}
 			</Content>
 			<Options>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { HTMLAttributes } from 'react'
 
 import { PokemonType, usePokemon } from '@hooks/usePokemon'
@@ -30,27 +31,27 @@ const ChoosePokemon = () => {
 	const { pokemons, setPokemons, loading } = usePokemon()
 
 	const { pokemonSelected, setPokemonSelected } = usePokemonContext()
-	console.log(
-		'🚀🚀 ~ file: index.tsx ~ line 32 ~ ChoosePokemon ~ pokemonSelected',
-		pokemonSelected
-	)
-	console.log(
-		'🚀🚀 ~ file: index.tsx ~ line 31 ~ ChoosePokemon ~ pokemons',
-		pokemons
-	)
+
 	if (loading) {
 		return <p>carregando</p>
 	}
 
-	const handleAddPokemonList = (pokemon: PokemonType) => {
-		if (pokemonSelected.length >= 6) return
+	const handleAddPokemonList = (pokemon: PokemonType, index: number) => {
+		if (
+			pokemonSelected.length >= 6 ||
+			pokemonSelected.find(p => p.id === pokemon.id)
+		)
+			return
 
 		const data = {
 			...pokemon,
 			selected: !pokemon.selected
 		}
 
-		setPokemons(prev => [...prev, data])
+		const pokeTemp = [...pokemons]
+		pokeTemp[index] = data
+
+		setPokemons(pokeTemp)
 		setPokemonSelected(prev => [...prev, data])
 	}
 
@@ -65,10 +66,10 @@ const ChoosePokemon = () => {
 
 			<Content>
 				{pokemons.length > 0 &&
-					pokemons.map(pokemon => (
+					pokemons.map((pokemon, index) => (
 						<div
 							key={pokemon.id}
-							onClick={() => handleAddPokemonList(pokemon)}
+							onClick={() => handleAddPokemonList(pokemon, index)}
 						>
 							<PokemonCard pokemon={pokemon} />
 						</div>
