@@ -57,13 +57,13 @@ const ChoosePokemon = () => {
 
 	return (
 		<Wrapper>
+			aaaa
 			<HeadingIcon
 				title="Choose 6 Pokémons:"
 				color={Theme.color.primary}
 				family={Theme.fonts.bold}
 				required={false}
 			/>
-
 			<Content>
 				{pokemons.length > 0 &&
 					pokemons.map((pokemon, index) => (
