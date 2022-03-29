@@ -59,12 +59,12 @@ const PokedeckList = () => {
 	}
 	return (
 		<Wrapper>
+			aaaa
 			<HeadingIcon
 				title="My Team"
 				color={Theme.color.primary}
 				family={Theme.fonts.bold}
 			/>
-
 			<Content>
 				{pokemonSelected.map((pokemon, index) => (
 					<div
