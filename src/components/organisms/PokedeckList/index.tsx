@@ -59,7 +59,6 @@ const PokedeckList = () => {
 	}
 	return (
 		<Wrapper>
-			aaaa
 			<HeadingIcon
 				title="My Team"
 				color={Theme.color.primary}

@@ -3,13 +3,15 @@ import { useContext } from 'react'
 
 import { PokemonType } from '@hooks/usePokemon'
 
+import Theme from '@themes/default'
+
 export interface Type {
 	type: { name: string }
 }
 
 export interface TeamType {
 	id: string
-	name: string
+	name: typeof Theme.pokeColor
 	team: [PokemonType]
 }
 

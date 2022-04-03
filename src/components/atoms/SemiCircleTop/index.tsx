@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { HTMLAttributes } from 'react'
 
 import styled from 'styled-components'
 
+import Theme from '@themes/default'
+
 interface SemiCircleTopType extends HTMLAttributes<HTMLDivElement> {
-	borderTop?: any
+	borderTop?: keyof typeof Theme.pokeColor
 }
 
 export const CircleTop = styled.div<SemiCircleTopType>`

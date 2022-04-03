@@ -40,27 +40,25 @@ declare module 'styled-components' {
 			md: string
 			lg: string
 		}
-		pokeColor: [
-			{
-				bug: string
-				dark: string
-				dragon: string
-				fairy: string
-				fighting: string
-				fire: string
-				ghost: string
-				grass: string
-				ground: string
-				normal: string
-				poison: string
-				psychic: string
-				steel: string
-				water: string
-				eletric: string
-				ice: string
-				flying: string
-				rock: string
-			}
-		]
+		pokeColor: {
+			bug: string
+			dark: string
+			dragon: string
+			fairy: string
+			fighting: string
+			fire: string
+			ghost: string
+			grass: string
+			ground: string
+			normal: string
+			poison: string
+			psychic: string
+			steel: string
+			water: string
+			eletric: string
+			ice: string
+			flying: string
+			rock: string
+		}
 	}
 }
