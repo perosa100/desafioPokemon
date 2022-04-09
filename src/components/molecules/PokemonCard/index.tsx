@@ -1,4 +1,4 @@
-import { PokemonType } from '@hooks/usePokemon'
+import { PokemonType } from '@hooks/useGetPokemon'
 import styled from 'styled-components'
 
 import Heading from '@atoms/Heading'
@@ -13,10 +13,8 @@ export const Wrapper = styled.div`
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	justify-items: center;
-	align-items: center;
-	height: 140px;
-	> * {
+	justify-items: flex-start;
+	> div {
 		&:first-child {
 			position: absolute;
 			left: 0;
@@ -25,8 +23,8 @@ export const Wrapper = styled.div`
 	cursor: pointer;
 `
 export const ContentImage = styled.div`
-	height: 100px;
-	margin: 20px 0;
+	margin-top: 20px;
+	position: 'relative';
 `
 
 interface PokemonCardType {
@@ -37,13 +35,18 @@ const PokemonCard = ({ pokemon }: PokemonCardType) => (
 	<Wrapper>
 		<CircleNumber id={pokemon.id} />
 		<ContentImage>
-			<PokemonImage src={pokemon.url} layout="fill" />
+			<PokemonImage
+				src={pokemon.url}
+				layout="responsive"
+				width={100}
+				height={100}
+			/>
 		</ContentImage>
 		<Heading
 			title={pokemon.name}
 			color={Theme.color.primary}
-			level={4}
-			marginbottom="0"
+			level={5}
+			marginbottom="5px"
 			margintop="0"
 		/>
 

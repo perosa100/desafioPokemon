@@ -15,7 +15,13 @@ const PokemonImage = ({
 	width,
 	height
 }: PokemonImageType) => (
-	<Image src={src} layout={layout} width={width} height={height} />
+	<Image
+		src={src}
+		layout={layout}
+		width={width}
+		height={height}
+		objectFit="contain"
+	/>
 )
 
 export default PokemonImage

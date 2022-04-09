@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
 	background-color: ${Theme.color.gray};
 	padding: 8px;
 	border-radius: 50%;
+	z-index: 9999;
 `
 
 interface CircleNumberType {

@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { HTMLAttributes } from 'react'
 
-import { PokemonType, usePokemon } from '@hooks/usePokemon'
+import { PokemonType, useGetPokemon } from '@hooks/useGetPokemon'
 import styled from 'styled-components'
 
 import HeadingIcon from '@molecules/HeadingIcon'
@@ -16,32 +15,30 @@ interface ChoosePokemonType extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const Wrapper = styled.div<ChoosePokemonType>`
-	padding: ${Theme.spacing.md};
 	display: flex;
 	flex-direction: column;
+	padding: 0 15px;
 `
 
 export const Content = styled.div<ChoosePokemonType>`
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
-	gap: 10px;
+	grid-template-columns: repeat(auto-fill, 75px) 20%;
+	gap: 15px;
 `
 
 const ChoosePokemon = () => {
-	const { pokemons, setPokemons, loading } = usePokemon()
+	const { pokemons, setPokemons, loading } = useGetPokemon()
 
-	const { pokemonSelected, setPokemonSelected } = usePokemonContext()
+	const { pokemonSelected, addPokemonSelected } = usePokemonContext()
 
 	if (loading) {
 		return <p>carregando</p>
 	}
 
 	const handleAddPokemonList = (pokemon: PokemonType, index: number) => {
-		if (
-			pokemonSelected.length >= 6 ||
-			pokemonSelected.find(p => p.id === pokemon.id)
-		)
-			return
+		if (pokemonSelected.find(p => p.id === pokemon.id)) return
+
+		addPokemonSelected(pokemon)
 
 		const data = {
 			...pokemon,
@@ -52,12 +49,10 @@ const ChoosePokemon = () => {
 		pokeTemp[index] = data
 
 		setPokemons(pokeTemp)
-		setPokemonSelected(prev => [...prev, data])
 	}
 
 	return (
 		<Wrapper>
-			aaaa
 			<HeadingIcon
 				title="Choose 6 Pokémons:"
 				color={Theme.color.primary}

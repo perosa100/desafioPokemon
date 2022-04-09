@@ -1,19 +1,24 @@
 import styled from 'styled-components'
 
+import Header from '@molecules/Header'
+
+import ChoosePokemon from '@organisms/ChoosePokemon'
 import PokedeckList from '@organisms/PokedeckList'
 
 import DefaultTemplate from '@templates/defaultTemplate'
 
 const Wrapper = styled.div``
 
-const HomeTemplate = () => {
+const CreatePokemon = () => {
 	return (
-		<DefaultTemplate title="Pokedeck">
+		<DefaultTemplate title="Pokedeck Create">
 			<Wrapper>
+				<Header />
 				<PokedeckList />
+				<ChoosePokemon />
 			</Wrapper>
 		</DefaultTemplate>
 	)
 }
 
-export default HomeTemplate
+export default CreatePokemon

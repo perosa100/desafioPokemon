@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react'
 
-import { PokemonType } from '@hooks/usePokemon'
+import { PokemonType } from '@hooks/useGetPokemon'
 import styled from 'styled-components'
 
 import PokemonImage from '@atoms/PokemonImage'

@@ -29,7 +29,7 @@ export interface GetUrlPokemons {
 	}[]
 }
 
-export const usePokemon = () => {
+export const useGetPokemon = () => {
 	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
 
 	const [loading, setLoading] = React.useState(false)
