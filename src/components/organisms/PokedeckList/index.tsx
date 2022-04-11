@@ -1,4 +1,6 @@
-import { HTMLAttributes } from 'react'
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import React, { HTMLAttributes } from 'react'
 
 import { PokemonType } from '@hooks/useGetPokemon'
 import styled from 'styled-components'
@@ -20,6 +22,26 @@ interface PokedeckListType extends HTMLAttributes<HTMLDivElement> {
 export const Wrapper = styled.div<PokedeckListType>`
 	padding: ${Theme.spacing.md};
 `
+export const ContentTitle = styled.div`
+	display: flex;
+	align-self: center;
+
+	> div {
+		margin-left: 15px;
+	}
+`
+export const FormName = styled.input``
+
+export const Options = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 10px;
+	margin-top: 10px;
+	> p {
+		color: green;
+	}
+`
 
 export const Content = styled.div<PokedeckListType>`
 	display: flex;
@@ -32,27 +54,71 @@ export const Content = styled.div<PokedeckListType>`
 		}
 	}
 `
-
-export const Options = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	gap: 10px;
-`
-
+function sleep(ms: number) {
+	return new Promise(resolve => setTimeout(resolve, ms))
+}
 const PokedeckList = () => {
-	const { pokemonSelected, removePokemonSelected } = usePokemonContext()
-
+	const {
+		pokemonSelected,
+		resetPokemonSelected,
+		savePokemonSelected,
+		removePokemonSelected
+	} = usePokemonContext()
+	const [error, setError] = React.useState('')
+	const [openMessagePost, setOpenMessagePost] = React.useState(false)
+	const [nameTeam, setNameTeam] = React.useState('My Team')
+	const [openName, setOpenName] = React.useState(false)
 	const handleRemovePokemonList = (pokemon: PokemonType) => {
 		removePokemonSelected(pokemon)
 	}
 
+	const done = pokemonSelected.every(p => p.id !== '')
+
+	async function handleSavePokemon() {
+		if (!done) {
+			return
+		}
+
+		try {
+			await savePokemonSelected(nameTeam)
+			setOpenMessagePost(true)
+			setNameTeam('My Team')
+		} catch (error) {
+			setError(error as string)
+			setOpenMessagePost(true)
+		}
+
+		await sleep(3000)
+
+		setOpenMessagePost(false)
+		setError('')
+		resetPokemonSelected()
+	}
+
 	return (
 		<Wrapper>
-			<HeadingIcon
-				title="My Team"
-				color={Theme.color.primary}
-				family={Theme.fonts.bold}
-			/>
+			<ContentTitle>
+				<div onClick={() => setOpenName(prev => !prev)}>
+					<HeadingIcon
+						title={nameTeam}
+						color={Theme.color.primary}
+						family={Theme.fonts.bold}
+					/>
+				</div>
+				{openName && (
+					<>
+						<FormName
+							value={nameTeam}
+							onChange={e => {
+								setNameTeam(e.target.value)
+							}}
+						/>
+						<button onClick={() => setOpenName(prev => !prev)}>
+							salvar
+						</button>
+					</>
+				)}
+			</ContentTitle>
 			<Content>
 				{pokemonSelected.map((pokemon, index) => (
 					<div
@@ -64,8 +130,16 @@ const PokedeckList = () => {
 				))}
 			</Content>
 			<Options>
-				<Delete />
-				<Done />
+				{openMessagePost && (
+					<>{error !== '' ? error : <p>Time Criado com Sucesso</p>}</>
+				)}
+
+				<div onClick={() => resetPokemonSelected()}>
+					<Delete colorBolean={done} />
+				</div>
+				<div onClick={() => handleSavePokemon()}>
+					<Done colorBolean={done} />
+				</div>
 			</Options>
 		</Wrapper>
 	)

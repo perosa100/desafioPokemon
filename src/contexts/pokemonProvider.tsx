@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import * as React from 'react'
 import { useContext } from 'react'
 
 import { PokemonType, useGetPokemon } from '@hooks/useGetPokemon'
-
-import Theme from '@themes/default'
+import axios from 'axios'
 
 export interface Type {
 	type: { name: string }
@@ -11,17 +13,29 @@ export interface Type {
 
 export interface TeamType {
 	id: string
-	name: typeof Theme.pokeColor
-	team: [PokemonType]
+	name: string
+	pokemon: [PokemonTypeTeam]
+}
+
+interface PokemonTypeTeam {
+	url: string
+	name: string
+	type1: string
+	selected?: boolean
+	type2?: string
 }
 
 interface PokemonContextData {
 	pokemonTeam: TeamType[]
+	pokemons: PokemonType[]
 	setPokemonTeam: React.Dispatch<React.SetStateAction<TeamType[]>>
 	pokemonSelected: PokemonType[]
 	setPokemonSelected: React.Dispatch<React.SetStateAction<PokemonType[]>>
 	addPokemonSelected: (pokemon: PokemonType) => void
 	removePokemonSelected: (pokemon: PokemonType) => void
+	resetPokemonSelected: () => void
+	savePokemonSelected: (name: string) => Promise<void>
+	loading: boolean
 }
 
 const PokemonContext = React.createContext<PokemonContextData>(
@@ -36,9 +50,10 @@ const dataDefault = {
 }
 
 const PokemonProvider: React.FC = ({ ...props }) => {
+	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
+	const { getPokemon } = useGetPokemon()
+	const [loading, setLoading] = React.useState(false)
 	const [pokemonTeam, setPokemonTeam] = React.useState<TeamType[]>([])
-	const { pokemons, setPokemons } = useGetPokemon()
-
 	const [pokemonSelected, setPokemonSelected] = React.useState<PokemonType[]>([
 		dataDefault,
 		dataDefault,
@@ -47,6 +62,31 @@ const PokemonProvider: React.FC = ({ ...props }) => {
 		dataDefault,
 		dataDefault
 	])
+
+	React.useEffect(() => {
+		async function getTeamPokemons() {
+			const response = await axios.get<TeamType[]>(
+				'http://localhost:3000/api/getPokemon'
+			)
+			setPokemonTeam(response.data)
+		}
+		getTeamPokemons()
+	}, [])
+
+	async function getPokemonData() {
+		setLoading(true)
+		const data = await getPokemon()
+
+		setLoading(false)
+
+		if (data) {
+			setPokemons(data)
+		}
+	}
+
+	React.useEffect(() => {
+		getPokemonData()
+	}, [])
 
 	const addPokemonSelected = (pokemon: PokemonType) => {
 		const arrayPokemon = pokemonSelected.filter(pok => pok.id !== '')
@@ -59,36 +99,83 @@ const PokemonProvider: React.FC = ({ ...props }) => {
 		for (let index = 0; index < finalFor; index++)
 			arrayPokemon.push(dataDefault)
 
+		const pokeTemp = [...pokemons]
+		const index = pokeTemp.findIndex(f => f.id === pokemon.id)
+
+		pokeTemp[index].selected = !pokemon.selected
+
 		setPokemonSelected(arrayPokemon)
+		setPokemons(pokeTemp)
 	}
 
 	const removePokemonSelected = (pokemon: PokemonType) => {
 		const newData = pokemonSelected.filter(p => p.id !== pokemon.id)
 
-		const data = {
-			...pokemon,
-			selected: !pokemon.selected
-		}
-
-		const pokeTemp = [...pokemons]
-		pokeTemp[pokeTemp.findIndex(f => f.id === pokemon.id)] = data
-
 		const finalFor = 6 - newData.length
 		for (let index = 0; index < finalFor; index++) newData.push(dataDefault)
+
+		const pokeTemp = [...pokemons]
+		const index = pokeTemp.findIndex(f => f.id === pokemon.id)
+
+		pokeTemp[index].selected = !pokemon.selected
 
 		setPokemonSelected(newData)
 		setPokemons(pokeTemp)
 	}
 
+	function resetPokemonSelected() {
+		setPokemonSelected([
+			dataDefault,
+			dataDefault,
+			dataDefault,
+			dataDefault,
+			dataDefault,
+			dataDefault
+		])
+		const pokeTemp = [...pokemons]
+
+		for (let index = 0; index < pokemons.length; index++) {
+			pokeTemp[index].selected = false
+		}
+
+		setPokemons(pokeTemp)
+	}
+
+	const savePokemonSelected = async (nameTeam: string) => {
+		const formatForDbTeam = pokemonSelected.map(element => {
+			const poke: any = {}
+			element.types.forEach((type, index) => {
+				poke['type' + (index + 1)] = type?.type.name
+			})
+			return {
+				name: element.name,
+				url: element.url,
+				selected: element.selected,
+				...poke
+			}
+		})
+
+		const data = {
+			name: nameTeam,
+			pokemon: formatForDbTeam
+		}
+
+		await axios.post('http://localhost:3000/api/postPokemon', data)
+	}
+
 	return (
 		<PokemonContext.Provider
 			value={{
+				pokemons,
 				pokemonTeam,
 				setPokemonTeam,
 				pokemonSelected,
 				setPokemonSelected,
 				addPokemonSelected,
-				removePokemonSelected
+				removePokemonSelected,
+				resetPokemonSelected,
+				savePokemonSelected,
+				loading
 			}}
 			{...props}
 		>

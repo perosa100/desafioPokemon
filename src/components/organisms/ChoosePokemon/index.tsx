@@ -1,6 +1,6 @@
-import React, { HTMLAttributes } from 'react'
+import React from 'react'
 
-import { PokemonType, useGetPokemon } from '@hooks/useGetPokemon'
+import { PokemonType } from '@hooks/useGetPokemon'
 import styled from 'styled-components'
 
 import HeadingIcon from '@molecules/HeadingIcon'
@@ -10,45 +10,30 @@ import Theme from '@themes/default'
 
 import { usePokemonContext } from '@contexts/pokemonProvider'
 
-interface ChoosePokemonType extends HTMLAttributes<HTMLDivElement> {
-	children?: React.ReactNode
-}
-
-export const Wrapper = styled.div<ChoosePokemonType>`
+export const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 0 15px;
 `
 
-export const Content = styled.div<ChoosePokemonType>`
+export const Content = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 75px) 20%;
 	gap: 15px;
 `
 
 const ChoosePokemon = () => {
-	const { pokemons, setPokemons, loading } = useGetPokemon()
+	const { pokemonSelected, addPokemonSelected, pokemons, loading } =
+		usePokemonContext()
 
-	const { pokemonSelected, addPokemonSelected } = usePokemonContext()
-
-	if (loading) {
-		return <p>carregando</p>
-	}
-
-	const handleAddPokemonList = (pokemon: PokemonType, index: number) => {
+	function handleAddPokemonList(pokemon: PokemonType) {
 		if (pokemonSelected.find(p => p.id === pokemon.id)) return
 
-		addPokemonSelected(pokemon)
-
-		const data = {
-			...pokemon,
-			selected: !pokemon.selected
+		try {
+			addPokemonSelected(pokemon)
+		} catch (error) {
+			throw new Error('ouve algo ao criar')
 		}
-
-		const pokeTemp = [...pokemons]
-		pokeTemp[index] = data
-
-		setPokemons(pokeTemp)
 	}
 
 	return (
@@ -60,15 +45,19 @@ const ChoosePokemon = () => {
 				required={false}
 			/>
 			<Content>
-				{pokemons.length > 0 &&
-					pokemons.map((pokemon, index) => (
+				{!loading ? (
+					pokemons.length > 0 &&
+					pokemons.map(pokemon => (
 						<div
-							key={pokemon.id}
-							onClick={() => handleAddPokemonList(pokemon, index)}
+							key={pokemon.name}
+							onClick={() => handleAddPokemonList(pokemon)}
 						>
 							<PokemonCard pokemon={pokemon} />
 						</div>
-					))}
+					))
+				) : (
+					<p>carregando</p>
+				)}
 			</Content>
 		</Wrapper>
 	)

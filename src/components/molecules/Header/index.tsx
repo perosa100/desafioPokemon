@@ -1,8 +1,13 @@
+import Link from 'next/link'
 import styled from 'styled-components'
 
 import Divider from '@atoms/Divider'
 import Heading from '@atoms/Heading'
 
+interface HeaderProps {
+	title: string
+	url: string
+}
 export const Wrapper = styled.div`
 	height: 110px;
 	display: flex;
@@ -11,12 +16,20 @@ export const Wrapper = styled.div`
 	align-items: center;
 	justify-content: flex-end;
 	background-color: ${props => props.theme.color.gray};
+	cursor: pointer;
 `
 
-const Header = () => (
+const Header = ({ title, url }: HeaderProps) => (
 	<Wrapper>
 		<Divider />
-		<Heading title="TEAMS" level={3} marginbottom="10px" margintop="12px" />
+		<Link href={url} passHref>
+			<Heading
+				title={title}
+				level={3}
+				marginbottom="10px"
+				margintop="12px"
+			/>
+		</Link>
 	</Wrapper>
 )
 

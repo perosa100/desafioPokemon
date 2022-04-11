@@ -1,6 +1,6 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import * as React from 'react'
 
 import axios from 'axios'
 
@@ -17,7 +17,6 @@ export interface Type {
 }
 
 export interface TeamType {
-	id: string
 	name: string
 	team: [PokemonType]
 }
@@ -30,42 +29,34 @@ export interface GetUrlPokemons {
 }
 
 export const useGetPokemon = () => {
-	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
+	const getPokemon = async (): Promise<PokemonType[] | undefined> => {
+		try {
+			const value: PokemonType[] = []
+			const data = await axios
+				.get<GetUrlPokemons>('https://pokeapi.co/api/v2/pokemon-form/')
+				.then(async response => {
+					return response.data
+				})
 
-	const [loading, setLoading] = React.useState(false)
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			for await (const content of data.results.map(d => {
+				axios.get(d.url).then(async response => {
+					const data = {
+						id: response.data.id,
+						url: response.data.sprites.front_default,
+						name: response.data.name,
+						types: response.data.types,
+						selected: false
+					}
 
-	async function getPokemon(url: string) {
-		await axios.get(url).then(async response => {
-			const data: PokemonType = {
-				id: response.data.id,
-				url: response.data.sprites.front_default,
-				name: response.data.name,
-				types: response.data.types,
-				selected: false
-			}
-			return setPokemons(prev => [...prev, data])
-		})
+					return value.push(data)
+				})
+			}))
+				return value
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
-	async function getUrlPokemons() {
-		setLoading(true)
-		await axios
-			.get<GetUrlPokemons>('https://pokeapi.co/api/v2/pokemon-form/')
-			.then(async response => {
-				const resultUrl = response.data
-
-				await Promise.all(
-					resultUrl.results.map(async (item): Promise<any> => {
-						await getPokemon(item.url)
-					})
-				)
-				setLoading(false)
-			})
-	}
-
-	React.useEffect(() => {
-		getUrlPokemons()
-	}, [])
-
-	return { pokemons, loading, setPokemons }
+	return { getPokemon }
 }

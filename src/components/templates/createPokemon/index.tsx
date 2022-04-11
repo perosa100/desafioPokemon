@@ -13,7 +13,7 @@ const CreatePokemon = () => {
 	return (
 		<DefaultTemplate title="Pokedeck Create">
 			<Wrapper>
-				<Header />
+				<Header title="TEAMS" url="/" />
 				<PokedeckList />
 				<ChoosePokemon />
 			</Wrapper>

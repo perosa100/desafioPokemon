@@ -2,11 +2,16 @@ import React from 'react'
 
 import styled from 'styled-components'
 
-export const Wrapper = styled.div`
-	border-bottom: solid 1px #fff;
-	width: 80%;
+interface DividerProps {
+	colorActive?: string
+}
+export const Wrapper = styled.div<DividerProps>`
+	border-bottom: solid 2px ${props => props.colorActive};
+	width: 90%;
 `
 
-const Divider = () => <Wrapper />
+const Divider = ({ colorActive = '#fff' }: DividerProps) => (
+	<Wrapper colorActive={colorActive} />
+)
 
 export default Divider

@@ -1,6 +1,5 @@
 import { HTMLAttributes } from 'react'
 
-import { PokemonType } from '@hooks/useGetPokemon'
 import styled from 'styled-components'
 
 import PokemonImage from '@atoms/PokemonImage'
@@ -9,8 +8,16 @@ import SemiCircleTop from '@atoms/SemiCircleTop'
 
 import Theme from '@themes/default'
 
-interface PokedeckType extends HTMLAttributes<HTMLDivElement> {
-	pokemon?: PokemonType
+export interface PokemonType {
+	url: string
+	name: string
+	type1: string
+	selected?: boolean
+	type2?: string
+}
+
+interface PokedeckListTeamType extends HTMLAttributes<HTMLDivElement> {
+	pokemon: PokemonType
 }
 
 export const Wrapper = styled.div`
@@ -21,13 +28,11 @@ export const Wrapper = styled.div`
 	}
 `
 
-const Pokedeck = ({ pokemon }: PokedeckType) => {
+const PokedeckListTeam = ({ pokemon }: PokedeckListTeamType) => {
 	return (
 		<Wrapper>
 			<SemiCircleTop
-				borderTop={
-					pokemon?.types[0].type.name as keyof typeof Theme.pokeColor
-				}
+				borderTop={pokemon.type1 as keyof typeof Theme.pokeColor}
 			/>
 			{pokemon?.url && <PokemonImage src={pokemon?.url} />}
 			<SemiCircleBottom />
@@ -35,4 +40,4 @@ const Pokedeck = ({ pokemon }: PokedeckType) => {
 	)
 }
 
-export default Pokedeck
+export default PokedeckListTeam

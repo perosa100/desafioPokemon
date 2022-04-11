@@ -43,10 +43,18 @@ const DividerType = ({ TypeColor }: DividerTypeProps) => {
 	return (
 		<Wrapper>
 			{TypeColor[0].type.name && (
-				<TypeOne colorProps={TypeColor[0].type.name} />
+				<TypeOne
+					colorProps={
+						TypeColor[0].type.name as keyof typeof Theme.pokeColor
+					}
+				/>
 			)}
 			{TypeColor[1]?.type.name && (
-				<TypeTwo colorProps={TypeColor[1].type.name} />
+				<TypeTwo
+					colorProps={
+						TypeColor[1].type.name as keyof typeof Theme.pokeColor
+					}
+				/>
 			)}
 		</Wrapper>
 	)

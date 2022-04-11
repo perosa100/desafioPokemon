@@ -19,6 +19,7 @@ export const Wrapper = styled.div<HeadingIconType>`
 	display: flex;
 	justify-items: center;
 	gap: ${Theme.spacing.sm};
+	cursor: pointer;
 `
 
 const HeadingIcon = ({
