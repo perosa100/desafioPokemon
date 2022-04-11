@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-import React, { HTMLAttributes } from 'react'
+import React from 'react'
 
 import styled from 'styled-components'
 
