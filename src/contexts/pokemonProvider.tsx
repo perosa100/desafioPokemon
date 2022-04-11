@@ -49,7 +49,10 @@ const dataDefault = {
 	types: [{ type: { name: '' } }]
 }
 
-const PokemonProvider: React.FC = ({ ...props }: any) => {
+interface childrenProps {
+	children: React.ReactNode
+}
+const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
 	const { getPokemon } = useGetPokemon()
 	const [loading, setLoading] = React.useState(false)
@@ -62,14 +65,13 @@ const PokemonProvider: React.FC = ({ ...props }: any) => {
 		dataDefault,
 		dataDefault
 	])
-
+	async function getTeamPokemons() {
+		const response = await axios.get<TeamType[]>(
+			'http://localhost:3000/api/getPokemon'
+		)
+		setPokemonTeam(response.data)
+	}
 	React.useEffect(() => {
-		async function getTeamPokemons() {
-			const response = await axios.get<TeamType[]>(
-				'http://localhost:3000/api/getPokemon'
-			)
-			setPokemonTeam(response.data)
-		}
 		getTeamPokemons()
 	}, [])
 
@@ -161,6 +163,8 @@ const PokemonProvider: React.FC = ({ ...props }: any) => {
 		}
 
 		await axios.post('http://localhost:3000/api/postPokemon', data)
+
+		await getTeamPokemons()
 	}
 
 	return (
@@ -179,7 +183,7 @@ const PokemonProvider: React.FC = ({ ...props }: any) => {
 			}}
 			{...props}
 		>
-			{props.children}
+			{children}
 		</PokemonContext.Provider>
 	)
 }
