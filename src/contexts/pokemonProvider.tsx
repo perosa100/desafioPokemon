@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
@@ -67,7 +68,7 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	])
 	async function getTeamPokemons() {
 		const response = await axios.get<TeamType[]>(
-			'http://localhost:3000/api/getPokemon'
+			`${process.env.NEXT_URL_API}/getPokemon`
 		)
 		setPokemonTeam(response.data)
 	}
@@ -162,7 +163,7 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 			pokemon: formatForDbTeam
 		}
 
-		await axios.post('http://localhost:3000/api/postPokemon', data)
+		await axios.post(`${process.env.NEXT_URL_API}/postPokemon`, data)
 
 		await getTeamPokemons()
 	}
