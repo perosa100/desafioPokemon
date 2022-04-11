@@ -39,7 +39,7 @@ export const useGetPokemon = () => {
 				})
 
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			for await (const content of data.results.map(d => {
+			for await (const _content of data.results.map(d => {
 				axios.get(d.url).then(async response => {
 					const data = {
 						id: response.data.id,

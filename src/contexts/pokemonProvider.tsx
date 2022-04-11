@@ -49,7 +49,7 @@ const dataDefault = {
 	types: [{ type: { name: '' } }]
 }
 
-const PokemonProvider: React.FC = ({ ...props }) => {
+const PokemonProvider: React.FC = ({ ...props }: any) => {
 	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
 	const { getPokemon } = useGetPokemon()
 	const [loading, setLoading] = React.useState(false)
