@@ -68,7 +68,7 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	])
 	async function getTeamPokemons() {
 		const response = await axios.get<TeamType[]>(
-			`${process.env.NEXT_URL_API}/getPokemon`
+			`${window.location.origin}/api/getPokemon`
 		)
 		setPokemonTeam(response.data)
 	}
@@ -163,7 +163,13 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 			pokemon: formatForDbTeam
 		}
 
-		await axios.post(`${process.env.NEXT_URL_API}/postPokemon`, data)
+		await axios.post(`${window.location.origin}/api/postPokemon`, {
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			data
+		})
 
 		await getTeamPokemons()
 	}
