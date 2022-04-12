@@ -53,10 +53,7 @@ const dataDefault = {
 	types: [{ type: { name: '' } }]
 }
 
-interface childrenProps {
-	children: React.ReactNode
-}
-const PokemonProvider = ({ children, ...props }: childrenProps) => {
+const PokemonProvider: React.FC = ({ ...props }: any) => {
 	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
 	const { getPokemon } = useGetPokemon()
 	const [loading, setLoading] = React.useState(false)
@@ -69,11 +66,21 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 		dataDefault,
 		dataDefault
 	])
+<<<<<<< HEAD
 	async function getTeamPokemons() {
 		const response = await axios.get<TeamType[]>(`${basePath}/api/getPokemon`)
 		setPokemonTeam(response.data)
 	}
+=======
+
+>>>>>>> parent of add6e86 (finish)
 	React.useEffect(() => {
+		async function getTeamPokemons() {
+			const response = await axios.get<TeamType[]>(
+				'http://localhost:3000/api/getPokemon'
+			)
+			setPokemonTeam(response.data)
+		}
 		getTeamPokemons()
 	}, [])
 
@@ -164,6 +171,7 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 			pokemon: formatForDbTeam
 		}
 
+<<<<<<< HEAD
 		try {
 			await axios.post(`${basePath}/api/postPokemon`, data, {
 				headers: {},
@@ -174,6 +182,9 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 		}
 
 		await getTeamPokemons()
+=======
+		await axios.post('http://localhost:3000/api/postPokemon', data)
+>>>>>>> parent of add6e86 (finish)
 	}
 
 	return (
@@ -192,7 +203,7 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 			}}
 			{...props}
 		>
-			{children}
+			{props.children}
 		</PokemonContext.Provider>
 	)
 }
