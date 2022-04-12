@@ -1,17 +1,6 @@
 import { Prisma } from '@prisma/client'
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { prisma } from 'lib/prisma'
-=======
->>>>>>> parent of add6e86 (finish)
-=======
->>>>>>> parent of add6e86 (finish)
-=======
->>>>>>> parent of add6e86 (finish)
+import prisma from 'lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
-
-import prisma from '../../lib/prisma'
 
 export interface PokemonType {
 	url: string
@@ -43,7 +32,7 @@ export default async function postPokemon(
 			}
 		})
 
-		res.status(200).json(createTeam)
+		res.json(createTeam)
 	} catch (e) {
 		if (e instanceof Prisma.PrismaClientKnownRequestError) {
 			if (e.code === 'P2002') {

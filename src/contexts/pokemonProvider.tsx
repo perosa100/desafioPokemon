@@ -1,15 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import * as React from 'react'
 import { useContext } from 'react'
 
 import { PokemonType, useGetPokemon } from '@hooks/useGetPokemon'
 import axios from 'axios'
-
-import { basePath } from '@utils/siteConfig'
 
 export interface Type {
 	type: { name: string }
@@ -53,7 +49,10 @@ const dataDefault = {
 	types: [{ type: { name: '' } }]
 }
 
-const PokemonProvider: React.FC = ({ ...props }: any) => {
+interface childrenProps {
+	children: React.ReactNode
+}
+const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
 	const { getPokemon } = useGetPokemon()
 	const [loading, setLoading] = React.useState(false)
@@ -66,29 +65,13 @@ const PokemonProvider: React.FC = ({ ...props }: any) => {
 		dataDefault,
 		dataDefault
 	])
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 	async function getTeamPokemons() {
-		const response = await axios.get<TeamType[]>(`${basePath}/api/getPokemon`)
+		const response = await axios.get<TeamType[]>(
+			'http://localhost:3000/api/getPokemon'
+		)
 		setPokemonTeam(response.data)
 	}
-=======
-
->>>>>>> parent of add6e86 (finish)
-=======
-
->>>>>>> parent of add6e86 (finish)
-=======
-
->>>>>>> parent of add6e86 (finish)
 	React.useEffect(() => {
-		async function getTeamPokemons() {
-			const response = await axios.get<TeamType[]>(
-				'http://localhost:3000/api/getPokemon'
-			)
-			setPokemonTeam(response.data)
-		}
 		getTeamPokemons()
 	}, [])
 
@@ -179,28 +162,9 @@ const PokemonProvider: React.FC = ({ ...props }: any) => {
 			pokemon: formatForDbTeam
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-		try {
-			await axios.post(`${basePath}/api/postPokemon`, data, {
-				headers: {},
-				withCredentials: true
-			})
-		} catch (error) {
-			throw new Error(error as string)
-		}
+		await axios.post('http://localhost:3000/api/postPokemon', data)
 
 		await getTeamPokemons()
-=======
-		await axios.post('http://localhost:3000/api/postPokemon', data)
->>>>>>> parent of add6e86 (finish)
-=======
-		await axios.post('http://localhost:3000/api/postPokemon', data)
->>>>>>> parent of add6e86 (finish)
-=======
-		await axios.post('http://localhost:3000/api/postPokemon', data)
->>>>>>> parent of add6e86 (finish)
 	}
 
 	return (
@@ -219,7 +183,7 @@ const PokemonProvider: React.FC = ({ ...props }: any) => {
 			}}
 			{...props}
 		>
-			{props.children}
+			{children}
 		</PokemonContext.Provider>
 	)
 }
