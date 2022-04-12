@@ -68,10 +68,14 @@ const PokemonProvider: React.FC = ({ ...props }: any) => {
 	])
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	async function getTeamPokemons() {
 		const response = await axios.get<TeamType[]>(`${basePath}/api/getPokemon`)
 		setPokemonTeam(response.data)
 	}
+=======
+
+>>>>>>> parent of add6e86 (finish)
 =======
 
 >>>>>>> parent of add6e86 (finish)
@@ -177,6 +181,7 @@ const PokemonProvider: React.FC = ({ ...props }: any) => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		try {
 			await axios.post(`${basePath}/api/postPokemon`, data, {
 				headers: {},
@@ -187,6 +192,9 @@ const PokemonProvider: React.FC = ({ ...props }: any) => {
 		}
 
 		await getTeamPokemons()
+=======
+		await axios.post('http://localhost:3000/api/postPokemon', data)
+>>>>>>> parent of add6e86 (finish)
 =======
 		await axios.post('http://localhost:3000/api/postPokemon', data)
 >>>>>>> parent of add6e86 (finish)

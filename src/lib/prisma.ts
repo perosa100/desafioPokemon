@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client'
 declare global {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var prisma: PrismaClient | undefined
 }
 
@@ -21,12 +22,22 @@ export const prisma = global.prisma || new PrismaClient()
 }
 
 >>>>>>> parent of add6e86 (finish)
+=======
+	// allow global `var` declarations
+	// eslint-disable-next-line no-var
+	var prisma: PrismaClient | undefined
+}
+
+>>>>>>> parent of add6e86 (finish)
 export const prisma =
 	global.prisma ||
 	new PrismaClient({
 		log: ['query']
 	})
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of add6e86 (finish)
+=======
 >>>>>>> parent of add6e86 (finish)
 =======
 >>>>>>> parent of add6e86 (finish)
