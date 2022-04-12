@@ -1,6 +1,9 @@
 import { Prisma } from '@prisma/client'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { prisma } from 'lib/prisma'
+=======
+>>>>>>> parent of add6e86 (finish)
 =======
 >>>>>>> parent of add6e86 (finish)
 import type { NextApiRequest, NextApiResponse } from 'next'
