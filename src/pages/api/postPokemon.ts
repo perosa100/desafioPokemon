@@ -20,11 +20,6 @@ export default async function postPokemon(
 	res: NextApiResponse
 ) {
 	const { name, pokemon } = req.body as RequestDataPokemon
-
-	if (req.method !== 'POST') {
-		return res.status(405).json({ message: 'Method not allowed' })
-	}
-
 	try {
 		const createTeam = await prisma.team.create({
 			data: {
@@ -37,13 +32,13 @@ export default async function postPokemon(
 			}
 		})
 
-		res.json(createTeam)
+		res.status(200).json(createTeam)
 	} catch (e) {
 		if (e instanceof Prisma.PrismaClientKnownRequestError) {
 			if (e.code === 'P2002') {
-				return res.status(400).json({ message: 'Nome do time ja existe' })
+				return res.status(400).json({ error: 'Nome do time ja existe' })
 			}
 		}
-		res.status(400).json({ message: 'Something went wrong' })
+		throw new Error('Erro Interno')
 	}
 }

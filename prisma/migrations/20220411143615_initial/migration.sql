@@ -13,16 +13,11 @@ CREATE TABLE "Pokemon" (
     "name" TEXT NOT NULL,
     "type1" TEXT NOT NULL,
     "type2" TEXT,
+    "selected" BOOLEAN,
     "team_id" UUID,
 
     CONSTRAINT "Pokemon_pkey" PRIMARY KEY ("id")
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "Team_name_key" ON "Team"("name");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Pokemon_url_key" ON "Pokemon"("url");
 
 -- AddForeignKey
 ALTER TABLE "Pokemon" ADD CONSTRAINT "Pokemon_team_id_fkey" FOREIGN KEY ("team_id") REFERENCES "Team"("id") ON DELETE CASCADE ON UPDATE CASCADE;

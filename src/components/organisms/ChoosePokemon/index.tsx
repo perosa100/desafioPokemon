@@ -46,7 +46,7 @@ const ChoosePokemon = () => {
 			/>
 			<Content>
 				{!loading ? (
-					pokemons.length > 0 &&
+					pokemons.length >= 0 &&
 					pokemons.map(pokemon => (
 						<div
 							key={pokemon.name}

@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as React from 'react'
 import { useContext } from 'react'
 
 import { PokemonType, useGetPokemon } from '@hooks/useGetPokemon'
 import axios from 'axios'
+
+import { basePath } from '@utils/siteConfig'
 
 export interface Type {
 	type: { name: string }
@@ -67,9 +70,7 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 		dataDefault
 	])
 	async function getTeamPokemons() {
-		const response = await axios.get<TeamType[]>(
-			`${window.location.origin}/api/getPokemon`
-		)
+		const response = await axios.get<TeamType[]>(`${basePath}/api/getPokemon`)
 		setPokemonTeam(response.data)
 	}
 	React.useEffect(() => {
@@ -163,13 +164,14 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 			pokemon: formatForDbTeam
 		}
 
-		await axios.post(`${window.location.origin}/api/postPokemon`, {
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			data
-		})
+		try {
+			await axios.post(`${basePath}/api/postPokemon`, data, {
+				headers: {},
+				withCredentials: true
+			})
+		} catch (error) {
+			throw new Error(error as string)
+		}
 
 		await getTeamPokemons()
 	}
