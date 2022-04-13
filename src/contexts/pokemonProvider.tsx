@@ -54,7 +54,7 @@ interface childrenProps {
 	children: React.ReactNode
 }
 
-const URL_BASE = process.env.PRODUCTION_URL as string
+const URL_BASE = process.env.NEXT_PUBLIC_BASE_URL as string
 console.log(
 	'🚀🚀 ~ file: pokemonProvider.tsx ~ line 168 ~ savePokemonSelected ~ URL_BASE',
 	process.env.NEXT_PUBLIC_BASE_URL
