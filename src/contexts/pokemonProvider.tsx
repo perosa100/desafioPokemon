@@ -54,7 +54,7 @@ interface childrenProps {
 	children: React.ReactNode
 }
 
-const URL_BASE = process.env.PRODUCTION_URL as string
+const URL_BASE = process.env.PRODUCTION_URL_PROD as string
 
 const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
