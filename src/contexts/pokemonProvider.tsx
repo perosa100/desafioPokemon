@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import * as React from 'react'
 import { useContext } from 'react'
 
 import { PokemonType, useGetPokemon } from '@hooks/useGetPokemon'
 import axios from 'axios'
-
-import { basePath } from '@utils/siteConfig'
 
 export interface Type {
 	type: { name: string }
@@ -57,6 +55,10 @@ interface childrenProps {
 }
 const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
+	console.log(
+		'🚀🚀 ~ file: pokemonProvider.tsx ~ line 58 ~ PokemonProvider ~ pokemons',
+		pokemons
+	)
 	const { getPokemon } = useGetPokemon()
 	const [loading, setLoading] = React.useState(false)
 	const [pokemonTeam, setPokemonTeam] = React.useState<TeamType[]>([])
@@ -70,7 +72,7 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	])
 	async function getTeamPokemons() {
 		const response = await axios.get<TeamType[]>(
-			`${basePath}/api/getPokemon `
+			`${process.env.PRODUCTION_URL}/api/getPokemon `
 		)
 		setPokemonTeam(response.data)
 	}
@@ -164,8 +166,12 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 			name: nameTeam,
 			pokemon: formatForDbTeam
 		}
+		console.log(
+			'🚀🚀 ~ file: pokemonProvider.tsx ~ line 165 ~ savePokemonSelected ~ formatForDbTeam',
+			formatForDbTeam
+		)
 
-		await axios.post(`${basePath}/api/postPokemon`, data)
+		await axios.post(`${process.env.PRODUCTION_URL}/api/postPokemon`, data)
 
 		await getTeamPokemons()
 	}
