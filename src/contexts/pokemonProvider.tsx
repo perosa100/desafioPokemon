@@ -54,14 +54,13 @@ interface childrenProps {
 	children: React.ReactNode
 }
 
-const URL_BASE = process.env.NEXT_PUBLIC_BASE_URL as string
 console.log(
-	'🚀🚀 ~ file: pokemonProvider.tsx ~ line 168 ~ savePokemonSelected ~ URL_BASE',
+	'🚀🚀 ~ file: pokemonProvider.tsx ~ line 168 ~ savePokemonSelected ~ NEXT_PUBLIC_BASE_URL',
 	process.env.NEXT_PUBLIC_BASE_URL
 )
 console.log(
-	'🚀🚀 ~ file: pokemonProvider.tsx ~ line 168 ~ savePokemonSelected ~ URL_BASE',
-	`${URL_BASE}/api/getPokemon`
+	'🚀🚀 ~ file: pokemonProvider.tsx ~ line 168 ~ savePokemonSelected ~ NEXT_PUBLIC_BASE_URL',
+	`${process.env.NEXT_PUBLIC_BASE_URL}/api/getPokemon`
 )
 
 const PokemonProvider = ({ children, ...props }: childrenProps) => {
@@ -79,7 +78,9 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 		dataDefault
 	])
 	async function getTeamPokemons() {
-		const response = await axios.get<TeamType[]>(`${URL_BASE}/api/getPokemon`)
+		const response = await axios.get<TeamType[]>(
+			`${NEXT_PUBLIC_BASE_URL}/api/getPokemon`
+		)
 		setPokemonTeam(response.data)
 	}
 	React.useEffect(() => {
@@ -172,7 +173,7 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 			name: nameTeam,
 			pokemon: formatForDbTeam
 		}
-		await axios.post(`${URL_BASE}/api/postPokemon`, data)
+		await axios.post(`${NEXT_PUBLIC_BASE_URL}/api/postPokemon`, data)
 
 		await getTeamPokemons()
 	}
