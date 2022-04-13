@@ -53,6 +53,9 @@ const dataDefault = {
 interface childrenProps {
 	children: React.ReactNode
 }
+
+const URL_BASE = process.env.PRODUCTION_URL as string
+
 const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
 	console.log(
@@ -71,9 +74,7 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 		dataDefault
 	])
 	async function getTeamPokemons() {
-		const response = await axios.get<TeamType[]>(
-			`${process.env.PRODUCTION_URL}/api/getPokemon `
-		)
+		const response = await axios.get<TeamType[]>(`${URL_BASE}/api/getPokemon`)
 		setPokemonTeam(response.data)
 	}
 	React.useEffect(() => {
@@ -171,7 +172,7 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 			formatForDbTeam
 		)
 
-		await axios.post(`${process.env.PRODUCTION_URL}/api/postPokemon`, data)
+		await axios.post(`${URL_BASE}/api/postPokemon`, data)
 
 		await getTeamPokemons()
 	}
