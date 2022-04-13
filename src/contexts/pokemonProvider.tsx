@@ -55,7 +55,10 @@ interface childrenProps {
 }
 
 const URL_BASE = process.env.PRODUCTION_URL as string
-
+console.log(
+	'🚀🚀 ~ file: pokemonProvider.tsx ~ line 168 ~ savePokemonSelected ~ URL_BASE',
+	process.env.PRODUCTION_URL
+)
 const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
 
@@ -165,10 +168,6 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 			pokemon: formatForDbTeam
 		}
 		await axios.post(`${URL_BASE}/api/postPokemon`, data)
-		console.log(
-			'🚀🚀 ~ file: pokemonProvider.tsx ~ line 168 ~ savePokemonSelected ~ URL_BASE',
-			URL_BASE
-		)
 
 		await getTeamPokemons()
 	}
