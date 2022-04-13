@@ -57,7 +57,7 @@ interface childrenProps {
 const URL_BASE = process.env.PRODUCTION_URL as string
 console.log(
 	'🚀🚀 ~ file: pokemonProvider.tsx ~ line 168 ~ savePokemonSelected ~ URL_BASE',
-	process.env.PRODUCTION_URL
+	process.env.NEXT_PUBLIC_BASE_URL
 )
 const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
