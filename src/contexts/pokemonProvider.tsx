@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
@@ -6,6 +7,8 @@ import { useContext } from 'react'
 
 import { PokemonType, useGetPokemon } from '@hooks/useGetPokemon'
 import axios from 'axios'
+
+import { basePath } from '@utils/siteConfig'
 
 export interface Type {
 	type: { name: string }
@@ -67,7 +70,7 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	])
 	async function getTeamPokemons() {
 		const response = await axios.get<TeamType[]>(
-			'http://localhost:3000/api/getPokemon'
+			`${basePath}/api/getPokemon `
 		)
 		setPokemonTeam(response.data)
 	}
@@ -162,7 +165,7 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 			pokemon: formatForDbTeam
 		}
 
-		await axios.post('http://localhost:3000/api/postPokemon', data)
+		await axios.post(`${basePath}/api/postPokemon`, data)
 
 		await getTeamPokemons()
 	}
