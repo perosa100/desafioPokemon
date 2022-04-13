@@ -1,5 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { PrismaClient } from '@prisma/client'
 
-const prisma: PrismaClient = new PrismaClient()
+// Prevent multiple instances of Prisma Client in development
+declare const global: NodeJS.Global & { prisma?: PrismaClient }
 
-export default prisma
+export const prisma = global.prisma || new PrismaClient()
+if (process.env.NODE_ENV === 'development') global.prisma = prisma

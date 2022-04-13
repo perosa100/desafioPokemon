@@ -4,7 +4,6 @@
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
 		"skipLibCheck": true,
-		"strict": true,
 		"forceConsistentCasingInFileNames": true,
 		"noEmit": true,
 		"esModuleInterop": true,
@@ -15,7 +14,7 @@
 		"jsx": "preserve",
 		"noImplicitAny": true,
 		"noUnusedLocals": true,
-
+		"strict": false,
 		"noUnusedParameters": true,
 		"noImplicitReturns": false,
 		"noFallthroughCasesInSwitch": true,
@@ -25,9 +24,7 @@
 		"sourceMap": true,
 		"removeComments": true,
 		"noEmitOnError": true,
-		"alwaysStrict": false,
 		"typeRoots": ["node_modules/@types/"],
-		"preserveConstEnums": true,
 		"baseUrl": "./src",
 		"paths": {
 			"@atoms/*": ["./components/atoms/*"],

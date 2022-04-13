@@ -164,7 +164,6 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 			name: nameTeam,
 			pokemon: formatForDbTeam
 		}
-
 		await axios.post(`${URL_BASE}/api/postPokemon`, data)
 
 		await getTeamPokemons()
