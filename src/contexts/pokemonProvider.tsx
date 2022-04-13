@@ -79,7 +79,7 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	])
 	async function getTeamPokemons() {
 		const response = await axios.get<TeamType[]>(
-			`${NEXT_PUBLIC_BASE_URL}/api/getPokemon`
+			`${process.env.NEXT_PUBLIC_BASE_URL}/api/getPokemon`
 		)
 		setPokemonTeam(response.data)
 	}
@@ -173,7 +173,10 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 			name: nameTeam,
 			pokemon: formatForDbTeam
 		}
-		await axios.post(`${NEXT_PUBLIC_BASE_URL}/api/postPokemon`, data)
+		await axios.post(
+			`${process.env.NEXT_PUBLIC_BASE_URL}/api/postPokemon`,
+			data
+		)
 
 		await getTeamPokemons()
 	}
