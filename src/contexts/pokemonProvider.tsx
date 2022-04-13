@@ -59,6 +59,10 @@ console.log(
 	'🚀🚀 ~ file: pokemonProvider.tsx ~ line 168 ~ savePokemonSelected ~ URL_BASE',
 	process.env.NEXT_PUBLIC_BASE_URL
 )
+console.log(
+	'🚀🚀 ~ file: pokemonProvider.tsx ~ line 168 ~ savePokemonSelected ~ URL_BASE',
+	`${URL_BASE}/api/getPokemon`
+)
 
 const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
