@@ -54,15 +54,6 @@ interface childrenProps {
 	children: React.ReactNode
 }
 
-console.log(
-	'🚀🚀 ~ file: pokemonProvider.tsx ~ line 168 ~ savePokemonSelected ~ NEXT_PUBLIC_BASE_URL',
-	process.env.NEXT_PUBLIC_BASE_URL
-)
-console.log(
-	'🚀🚀 ~ file: pokemonProvider.tsx ~ line 168 ~ savePokemonSelected ~ NEXT_PUBLIC_BASE_URL',
-	`${process.env.NEXT_PUBLIC_BASE_URL}/api/getPokemon`
-)
-
 const PokemonProvider = ({ children, ...props }: childrenProps) => {
 	const [pokemons, setPokemons] = React.useState<PokemonType[]>([])
 
