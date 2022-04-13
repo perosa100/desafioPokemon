@@ -165,6 +165,10 @@ const PokemonProvider = ({ children, ...props }: childrenProps) => {
 			pokemon: formatForDbTeam
 		}
 		await axios.post(`${URL_BASE}/api/postPokemon`, data)
+		console.log(
+			'🚀🚀 ~ file: pokemonProvider.tsx ~ line 168 ~ savePokemonSelected ~ URL_BASE',
+			URL_BASE
+		)
 
 		await getTeamPokemons()
 	}
